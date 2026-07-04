@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.company_name.automation.project.project_name.runners.TestRunner
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 36.60 s <<< FAILURE! -- in com.company_name.automation.project.project_name.runners.TestRunner
+Website Navigation and Validation.Open website and validate page loads successfully -- Time elapsed: 29.05 s <<< FAILURE!
+java.lang.AssertionError: Page header title is not displayed
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertFalse(Assert.java:65)
+	at com.company_name.automation.project.project_name.steps.FirstStepFile.userValidatesThatPageHeaderTitleIsNotEmpty(FirstStepFile.java:33)
+	at ✽.User validates that the page header title is not empty(file:///D:/Selenium%20Java%20Cucumber%20Project/Automation_Project/src/test/resources/project/project_name/first.feature:8)
+
