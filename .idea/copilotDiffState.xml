@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="/ReportSteps (snapshot).java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="/ReportSteps (snapshot).java" />
+              <option name="originalContent" value="package com.company_name.automation.common.steps;&#10;&#10;import io.cucumber.java.AfterStep;&#10;import io.cucumber.java.Scenario;&#10;&#10;public class ReportSteps extends Steps {&#10;&#10;    public ReportSteps(World world) {&#10;        super(world);&#10;    }&#10;&#10;    @AfterStep(&quot;@report&quot;)&#10;    public void epilogue(Scenario scenario)&#10;    {&#10;        world.report.build(scenario);&#10;    }&#10;}&#10;" />
+              <option name="updatedContent" value="package com.company_name.automation.common.steps;&#10;&#10;import io.cucumber.java.After;&#10;import io.cucumber.java.AfterStep;&#10;import io.cucumber.java.Scenario;&#10;&#10;public class ReportSteps extends Steps {&#10;&#10;    public ReportSteps(World world) {&#10;        super(world);&#10;    }&#10;&#10;    @AfterStep(&quot;@report&quot;)&#10;    public void epilogue(Scenario scenario)&#10;    {&#10;        world.report.build(scenario);&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
