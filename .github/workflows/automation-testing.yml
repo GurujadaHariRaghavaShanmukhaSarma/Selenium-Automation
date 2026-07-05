@@ -1,0 +1,93 @@
+name: Run web test for Applications in private
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Testing in Test environment'
+        required: true
+        default: 'test'
+
+      test_scenario:
+        description: 'Cucumber tags to run (e.g. @accordion_component or @button_component). Use "or" to combine multiple tags.'
+        required: true
+        default: '@testenv_run'
+        type: string
+
+      custom_test_scenario:
+        description: '(Optional) Override the above selection with a custom tag expression'
+        required: false
+        default: ''
+        type: string
+
+      threads:
+        description: 'Number of parallel threads (default 10)'
+        required: false
+        default: '10'
+        type: string
+
+jobs:
+  run-web-test:
+    runs-on: azu-ecs-self-hosted-linux
+
+    environment: ${{ inputs.environment }}
+
+    env:
+      AWS_S3_ACCESS_KEY: ${{ secrets.AWS_S3_ACCESS_KEY }}
+      AWS_S3_SECRET_KEY: ${{ secrets.AWS_S3_SECRET_KEY }}
+
+      Product_Master_EU_db_Username: ${{ secrets.Product_Master_EU_db_Username }}
+      Product_Master_EU_db_Password: ${{ secrets.Product_Master_EU_db_Password }}
+
+      PRODUCT_MASTER_APAC_DB_USERNAME: ${{ secrets.PRODUCT_MASTER_APAC_DB_USERNAME }}
+      PRODUCT_MASTER_APAC_DB_PASSWORD: ${{ secrets.PRODUCT_MASTER_APAC_DB_PASSWORD }}
+
+      PRID_EMAIL_ID: ${{ secrets.PRID_EMAIL_ID }}
+      PRID_PASSWORD: ${{ secrets.PRID_PASSWORD }}
+
+      VAULT_EMAIL_ID: ${{ secrets.VAULT_EMAIL_ID }}
+      VAULT_PASSCODE: ${{ secrets.VAULT_PASSCODE }}
+
+      AUTHENTICATOR_PASSCODE: ${{ secrets.AUTHENTICATOR_PASSCODE }}
+
+      CRMURL: ${{ vars.CRMURL }}
+      EMAIL_ID: ${{ vars.EMAIL_ID }}
+      FXHUBTESTURL: ${{ vars.FXHUBTESTURL }}
+      FXHUBURL: ${{ vars.FXHUBURL }}
+      OUTLOOKURL: ${{ vars.OUTLOOKURL }}
+      PRID: ${{ vars.PRID }}
+
+      PRODUCT_MASTER_EU_DB_URL: ${{ vars.PRODUCT_MASTER_EU_DB_URL }}
+
+      RELTIO_EU_BASEURL: ${{ vars.RELTIO_EU_BASEURL }}
+      RELTIO_APAC_BASEURL: ${{ vars.RELTIO_APAC_BASEURL }}
+
+      VAULTURL: ${{ vars.VAULTURL }}
+      RELTIO_DBTYPE: ${{ vars.RELTIO_DBTYPE }}
+
+    steps:
+
+      - name: Setup Google Chrome
+        uses: browser-actions/setup-chrome@2e1d749697dd1612b833dba4a722266286fbefcd
+        with:
+          chrome-version: 133
+
+      - name: Verify Chrome Version
+        run: chrome --version
+
+      - name: Verify ChromeDriver
+        run: |
+          if command -v chromedriver > /dev/null; then
+            echo "Chromedriver Version:"
+            chromedriver -v
+          else
+            echo "Chromedriver is not installed."
+          fi
+
+      - name: Pull the project into the runner
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+
+      - name: Set Environment Variable for Project Path
+        run: |
+          echo "PROJECT_PATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+          echo "The project path is ${GITHUB_WORKSPACE}"

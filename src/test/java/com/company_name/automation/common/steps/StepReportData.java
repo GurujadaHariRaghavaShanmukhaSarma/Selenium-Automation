@@ -9,6 +9,10 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -54,6 +58,28 @@ public class StepReportData {
             item.text = text;
             item.screenshot = screenshot;
 //            item.fileName = fileName;
+            items.add(item);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    public StepReportData captureFullScreenShot(WebDriver driver,String text)
+    {
+        try
+        {
+            Robot robot = new Robot();
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            Rectangle screenRectangle = new Rectangle(screenSize);
+            BufferedImage image = robot.createScreenCapture(screenRectangle);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+            byte[] screenshot = baos.toByteArray();
+            ReportItem item = new ReportItem();
+            item.screenshot = screenshot;
+            item.text = text;
             items.add(item);
         }
         catch (Exception e) {
